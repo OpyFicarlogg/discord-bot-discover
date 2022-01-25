@@ -1,12 +1,24 @@
 {
   "name": "discord-bot-discover",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpyFicarlogg/discord-bot-discover.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OpyFicarlogg/discord-bot-discover/issues"
+  },
+  "homepage": "https://github.com/OpyFicarlogg/discord-bot-discover#readme",
+  "description": "",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^14.3.0"
+  }
 }
