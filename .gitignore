@@ -1,1 +1,6 @@
 node_modules
+
+srvFiles
+
+##Exclude env for token and regenerate it for security
+.env
