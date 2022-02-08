@@ -1,6 +1,7 @@
-node_modules
-
-srvFiles
+## Exclude working folder
+/node_modules
+/srvFiles
+/build
 
 ##Exclude env for token and regenerate it for security
 .env

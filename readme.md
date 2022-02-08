@@ -10,6 +10,26 @@ https://joshtronic.com/2021/10/24/how-to-install-nodejs-17-on-ubuntu-lts/
 `npm init -y`  
 `npm install --save discord.js dotenv`  
 
+## Execution du bot 
+En js simple: `node bot.js`
+
+Suite au passage via typescript:  
+- Compilation `npm run build`  
+- Exécution `npm start`
+
+
+## Passage en typescript 
+https://dev.to/oceanroleplay/create-your-discord-bot-by-using-typescript-and-decorators-17gm
+
+Discord pour typescript :  
+`npm install discordx reflect-metadata discord.js`
+
+Installation typescript : 
+`npm install --save-dev @types/node typescript`
+
+Compilation : 
+`tsc --pretty`
+
 
 
 ## Run sur un autre serveur en ligne 
@@ -22,10 +42,10 @@ https://autocode.com/guides/how-to-build-a-discord-bot/
 ## Description du bot 
 
 Ce bot permet d'être notifié si il y a des personnes connectées sur le serveur.   
-* Il est possible de s'ajouter à la liste de notification avec la commande `!notifyMe`
+* Il est possible de s'ajouter à la liste de notification avec la commande `!notifyme`
 * Il existe une commande pour voir si le bot répond `!ping`
 
 #### Evolutions à venir 
-* Implémentation de la méthode `!stop notifyme` qui permet d'arrêter les notifications sur un utilisateur 
+* Implémentation de la méthode `!stopnotify` qui permet d'arrêter les notifications sur un utilisateur 
 * Implémentation d'une méthode `!help`
 * Définition d'options sur l'utilisateur à notifier (à partir de x user, tous les x minutes/heures, etc...)
