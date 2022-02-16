@@ -12,9 +12,17 @@
       "importHelpers": true, // required
       "forceConsistentCasingInFileNames": true,
       "lib": ["ES2021", "esnext.asynciterable"],
-      "moduleResolution": "node"
+      "moduleResolution": "node",
+
+      //Added from https://www.youtube.com/watch?v=mUCYXZ4Gx7E
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true,
+      "skipLibCheck": true,
+      "skipDefaultLibCheck": true
     },
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "include": ["src"]
   }
 
 // {   

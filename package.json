@@ -4,7 +4,10 @@
   "main": "bot.js",
   "scripts": {
     "build": "tsc",
-    "start": "node build/bot.js",
+    "jstart": "node build/bot.js",
+    "start": "ts-node-dev --respawn --transpile-only --poll ./src/bot.ts",
+    "deploy": "ts-node ./src/deploy-commands.ts",
+    "deploy-dev": "ts-node-dev --respawn --transpile-only --poll ./src/deploy-commands.ts local",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -20,6 +23,8 @@
   "homepage": "https://github.com/OpyFicarlogg/discord-bot-discover#readme",
   "description": "",
   "dependencies": {
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.27.1",
     "discord.js": "^13.6.0",
     "discordx": "^9.1.12",
     "dotenv": "^14.3.0",
@@ -29,6 +34,8 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.13",
+    "ts-node": "^10.5.0",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.5"
   }
 }

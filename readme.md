@@ -9,6 +9,7 @@ https://joshtronic.com/2021/10/24/how-to-install-nodejs-17-on-ubuntu-lts/
 
 `npm init -y`  
 `npm install --save discord.js dotenv`  
+`npm install @discordjs/rest discord-api-types`
 
 ## Execution du bot 
 En js simple: `node bot.js`
@@ -16,6 +17,17 @@ En js simple: `node bot.js`
 Suite au passage via typescript:  
 - Compilation `npm run build`  
 - Exécution `npm start`
+
+Via ts-node: 
+- `ts-node-dev --respawn --transpile-only --poll ./src/bot.ts`
+
+Avantage de ts-node: Pas besoin de compiler via build, et reload si modification dans le code 
+
+
+## Installation des dépendances pour ts-node 
+tuto : https://www.youtube.com/watch?v=mUCYXZ4Gx7E  
+- `npm install -D ts-node-dev`
+- `npm install -D ts-node`
 
 
 ## Passage en typescript 
@@ -33,6 +45,7 @@ Compilation :
 ## Injection de dépendance 
 
 Comparatifs des CDI:  
+https://blog.logrocket.com/top-five-typescript-dependency-injection-containers/  
 https://itnext.io/typescript-dependency-injection-setting-up-inversifyjs-ioc-for-a-ts-project-f25d48799d70
 
 Le framework choisi est inversify (https://github.com/inversify/InversifyJS), il est basé principalement sur les interfaces, et est le plus utilisé.
@@ -49,6 +62,11 @@ https://autocode.com/guides/how-to-build-a-discord-bot/
 
 
 ## Description du bot 
+
+Le fichier deploy-commands.ts permet de charger les commandes dans la guild ou sur le bot.  
+Deux commandes dans le package.json:  
+* `deploy` : Register des slash commands dans l'application 
+* `deploy-dev` : Register des slash commands dans la guild 
 
 Ce bot permet d'être notifié si il y a des personnes connectées sur le serveur.   
 * Il est possible de s'ajouter à la liste de notification avec la commande `!notifyme`
