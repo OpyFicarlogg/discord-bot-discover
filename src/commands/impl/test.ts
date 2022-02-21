@@ -1,9 +1,11 @@
 import { Client, CommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { Command } from "../interfaces/command";
+import { injectable } from "inversify";
+import { ToLoad } from "../../dto/toLoad";
 
-
-export default class Test implements Command {
+@injectable()
+export default class Test implements Command, ToLoad {
     private cmdName: string = 'test';
 
     public execute(client : Client, interaction : CommandInteraction, args?: string []) : void {
