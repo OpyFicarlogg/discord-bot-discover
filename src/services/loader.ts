@@ -1,11 +1,11 @@
 import { readdirSync} from "fs";
 import { injectable } from "inversify";
 import path from "path";
-import { Command } from "../commands/interfaces/command";
+import { Command } from "./commands/interfaces/command";
 import { ToLoad } from "../dto/toLoad";
 import { myContainer } from "../config/inversify.config";
 import { DYNAMIC_LOAD, LOAD_TYPES } from "../config/types";
-import { CustomMessage } from "./customMessage";
+import { CustomMessage } from "./messages/interfaces/customMessage";
 
 
 @injectable()
@@ -23,7 +23,7 @@ export class Loader{
     private load<Type>(folder: string)  {
         let retMap : Map<string, Type> = new Map();
         
-        const patho : string = path.join(process.cwd(),"src", folder, "impl");
+        const patho : string = path.join(process.cwd(),"src", "services",folder, "impl");
   
         let files = readdirSync(patho)
         .filter((file) => file.endsWith('.ts'));

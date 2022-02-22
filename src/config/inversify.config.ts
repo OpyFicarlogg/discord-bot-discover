@@ -3,21 +3,19 @@ import { Container } from "inversify";
 import { DYNAMIC_LOAD, LOAD_TYPES, TYPES } from "./types";
 import { FileUserDao } from "../dao/fileUserDao";
 import { IUserDao } from "../dao/interfaces/IuserDao";
-import { ICustomMessage } from "../services/interfaces/ICustomMessage";
-import { CustomMessage } from "../services/customMessage";
-import { ICustomStateUpdate } from "../services/interfaces/ICustomStateUpdate";
-import { CustomStateUpdate } from "../services/customStateUpdate";
+import { ICustomStateUpdate } from "../services/stateUpdate/interfaces/ICustomStateUpdate";
+import { CustomStateUpdate } from "../services/stateUpdate/customStateUpdate";
 import { File } from "../dao/file";
-import { Command } from "../commands/interfaces/command";
+import { Command } from "../services/commands/interfaces/command";
 import path from "path";
 import { readdirSync } from "fs";
 import { Loader } from "../services/loader";
+import { CustomMessage } from "../services/messages/interfaces/customMessage";
 
 //.toSelf() sans interface
 const myContainer = new Container({ defaultScope: "Singleton" });
 //Permet de lier une interface avec une classe
 myContainer.bind<IUserDao>(TYPES.IUserDao).to(FileUserDao);
-myContainer.bind<ICustomMessage>(TYPES.ICustomMessage).to(CustomMessage);
 myContainer.bind<ICustomStateUpdate>(TYPES.ICustomStateUpdate).to(CustomStateUpdate);
 myContainer.bind<Loader>(Loader).toSelf();
 myContainer.bind<File>(File).toSelf();
@@ -30,11 +28,12 @@ loader<CustomMessage>(LOAD_TYPES.message).then(() => console.log("end of message
 async function loader<Type>( folder : string)  {
 
     let symbolMap = new Map<string,symbol>();
-    const patho : string = path.join(process.cwd(),"src", folder, "impl");
+    const patho : string = path.join(process.cwd(),"src","services", folder, "impl");
 
     let files = readdirSync(patho)
       .filter((file) => file.endsWith('.ts'));
   
+      //https://stackoverflow.com/questions/50328582/how-to-dynamically-bind-a-dynamically-imported-type
       for(var i = 0; i < files.length ; i++) {
           //import dynamic 
           //TODO:Passage en require pour du sync? 

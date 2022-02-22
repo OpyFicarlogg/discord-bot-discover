@@ -1,6 +1,6 @@
 import { Client, Message } from "discord.js";
 import { injectable } from "inversify";
-import { ToLoad } from "../../dto/toLoad";
+import { ToLoad } from "../../../dto/toLoad";
 import { CustomMessage } from "../interfaces/customMessage";
 
 @injectable()

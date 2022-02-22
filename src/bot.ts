@@ -8,13 +8,13 @@ import { Intents } from "discord.js";
 import { myContainer } from "./config/inversify.config";
 import { TYPES } from "./config/types";
 
-import { ICustomMessage } from "./services/interfaces/ICustomMessage";
-import { ICustomStateUpdate } from "./services/interfaces/ICustomStateUpdate";
-import { Command } from "./commands/interfaces/command";
+import { ICustomStateUpdate } from "./services/stateUpdate/interfaces/ICustomStateUpdate";
+import { Command } from "./services/commands/interfaces/command";
 import { Loader } from "./services/loader";
+import { CustomMessage } from "./services/messages/interfaces/customMessage";
 
 //Dependency injection 
-const customMessage : ICustomMessage = myContainer.get<ICustomMessage>(TYPES.ICustomMessage);
+//const customMessage : ICustomMessage = myContainer.get<ICustomMessage>(TYPES.ICustomMessage);
 const customStateUpdate : ICustomStateUpdate = myContainer.get<ICustomStateUpdate>(TYPES.ICustomStateUpdate);
 const loader = myContainer.get<Loader>(Loader);
 //Intents.FLAGS.GUILD_VOICE_STATES pour voiceStateUpdate
@@ -22,10 +22,13 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 
 let commands = new Map<string,Command>();
 
+let messages = new Map<string,CustomMessage>();
+
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user!.tag}!`);
 
 	commands = loader.loadCommands();
+	messages = loader.loadMessages();
 
 	//define onload on application 
 	/*let command = client.application!.commands;
@@ -46,7 +49,13 @@ client.on('interactionCreate', async interaction => {
 
 //User messages
 client.on('messageCreate', msg => {
-    customMessage.execute(msg);
+	let prefix = '!';
+	if(msg.content.indexOf(prefix)!= -1){
+		let command =  msg.content.replace(prefix, '');
+		if(messages.get(command)){
+			messages.get(command)?.execute(client,msg);
+		}
+	}
 });
 
 //User enter or leave voice channel 

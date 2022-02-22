@@ -2,7 +2,7 @@ import { Client, CommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { Command } from "../interfaces/command";
 import { injectable } from "inversify";
-import { ToLoad } from "../../dto/toLoad";
+import { ToLoad } from "../../../dto/toLoad";
 
 //Discord tutorial handler https://github.com/discordjs/guide/tree/main/code-samples/creating-your-bot/command-handling
 //Default: https://stackoverflow.com/questions/51852938/typescript-dynamically-import-classes

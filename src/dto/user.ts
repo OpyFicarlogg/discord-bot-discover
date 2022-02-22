@@ -1,5 +1,3 @@
-import { StringifyOptions } from "querystring";
-
 export class User {
     //TODO: voir comment faire un bon constructeur 
     public constructor(id: string){
@@ -17,15 +15,6 @@ export class User {
     public userLimit: number | undefined | null;
     // define time in minute before next notification 
     public minuteLimit: number | undefined | null;
-
-    /*public toNotify() : Boolean {
-        if(this.lastDateNotification && this.minuteLimit) {
-            let today : Date = new Date();
-            return  this.lastDateNotification.getDate()+this.minuteLimit >today.getDate();
-        }
-        return true;
-        
-    }*/
 }
 
  //let user : User = <User>{id: "test"};
