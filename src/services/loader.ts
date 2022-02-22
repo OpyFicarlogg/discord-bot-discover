@@ -42,6 +42,7 @@ export class Loader{
     }
 
     //https://stackoverflow.com/questions/14425568/interface-type-check-with-typescript
+    //https://stackoverflow.com/questions/33800497/check-if-an-object-implements-an-interface-at-runtime-with-typescript
     //https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
     private instanceOfToLoad(object: any): object is ToLoad {
         return 'getName'  in object;

@@ -11,12 +11,15 @@ import { readdirSync } from "fs";
 import { Loader } from "../services/loader";
 import { AbstractMessage } from "../dto/abstractMessage";
 import { AbstractCommand } from "../dto/abstractCommand";
+import { INotification } from "../services/notify/interfaces/INotification";
+import Notification from "../services/notify/notification";
 
 //.toSelf() sans interface
 const myContainer = new Container({ defaultScope: "Singleton" });
 //Permet de lier une interface avec une classe
 myContainer.bind<IUserDao>(TYPES.IUserDao).to(FileUserDao);
 myContainer.bind<ICustomStateUpdate>(TYPES.ICustomStateUpdate).to(CustomStateUpdate);
+myContainer.bind<INotification>(TYPES.INotification).to(Notification);
 myContainer.bind<Loader>(Loader).toSelf();
 myContainer.bind<File>(File).toSelf();
 //Load dynamic

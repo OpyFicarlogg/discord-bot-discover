@@ -2,6 +2,7 @@
 const TYPES = {
     IUserDao: Symbol.for("IUserDao"),
     ICustomStateUpdate : Symbol.for("ICustomStateUpdate"),
+    INotification : Symbol.for("INotification"),
 };
 
 const LOAD_TYPES = {

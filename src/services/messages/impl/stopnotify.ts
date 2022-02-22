@@ -1,27 +1,20 @@
 import { Client, Message } from "discord.js";
 import { inject} from "inversify";
 import { TYPES } from "../../../config/types";
-import { IUserDao } from "../../../dao/interfaces/IuserDao";
 import { AbstractMessage } from "../../../dto/abstractMessage";
+import { INotification } from "../../notify/interfaces/INotification";
 
 export default class StopNotify extends AbstractMessage {
-    private _userDao : IUserDao;
+    private _notification : INotification;
 
-    public constructor(@inject(TYPES.IUserDao) userDao: IUserDao){
+    public constructor(@inject(TYPES.INotification) notification: INotification){
         super();
         super.msgName = 'stopnotify';
-        this._userDao = userDao;
+        this._notification = notification;
     }
 
-    public execute(client : Client, msg : Message) : void {
-        var message: string;
-        // Ajouter au fichier 
-        this._userDao.deleteUser(msg.guild!.id, msg.author.id);
-        var message :string  = `Notifications désactivées pour ${msg.author}`;
-        console.log(message);
-        
-        //Réponse au message 
-        msg.reply(message);
+    public execute(client : Client, msg : Message) : void {     
+        msg.reply(this._notification.disableNotification(msg.guild!.id,msg.author));
     }
 }
 

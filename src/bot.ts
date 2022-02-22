@@ -42,7 +42,7 @@ client.on('interactionCreate', async interaction => {
 //User messages
 client.on('messageCreate', msg => {
 	let prefix = '!';
-	if(msg.content.indexOf(prefix) == 0){
+	if(msg.content.startsWith(prefix)){
 		let command =  msg.content.replace(prefix, '');
 		if(messages.get(command)){
 			messages.get(command)?.execute(client,msg);
