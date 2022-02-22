@@ -9,9 +9,9 @@ import { myContainer } from "./config/inversify.config";
 import { TYPES } from "./config/types";
 
 import { ICustomStateUpdate } from "./services/stateUpdate/interfaces/ICustomStateUpdate";
-import { Command } from "./services/commands/interfaces/command";
 import { Loader } from "./services/loader";
-import { CustomMessage } from "./services/messages/interfaces/customMessage";
+import { AbstractMessage } from "./dto/abstractMessage";
+import { AbstractCommand } from "./dto/abstractCommand";
 
 //Dependency injection 
 //const customMessage : ICustomMessage = myContainer.get<ICustomMessage>(TYPES.ICustomMessage);
@@ -20,22 +20,14 @@ const loader = myContainer.get<Loader>(Loader);
 //Intents.FLAGS.GUILD_VOICE_STATES pour voiceStateUpdate
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_VOICE_STATES ] });
 
-let commands = new Map<string,Command>();
-
-let messages = new Map<string,CustomMessage>();
+let commands = new Map<string,AbstractCommand>();
+let messages = new Map<string,AbstractMessage>();
 
 client.on('ready', async () => {
     console.log(`Logged in as ${client.user!.tag}!`);
 
 	commands = loader.loadCommands();
 	messages = loader.loadMessages();
-
-	//define onload on application 
-	/*let command = client.application!.commands;
-	command.create({
-		name:'ping',
-		description:'reply with pong'
-	})*/
 });
 
 client.on('interactionCreate', async interaction => {
@@ -50,7 +42,7 @@ client.on('interactionCreate', async interaction => {
 //User messages
 client.on('messageCreate', msg => {
 	let prefix = '!';
-	if(msg.content.indexOf(prefix)!= -1){
+	if(msg.content.indexOf(prefix) == 0){
 		let command =  msg.content.replace(prefix, '');
 		if(messages.get(command)){
 			messages.get(command)?.execute(client,msg);

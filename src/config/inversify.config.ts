@@ -6,11 +6,11 @@ import { IUserDao } from "../dao/interfaces/IuserDao";
 import { ICustomStateUpdate } from "../services/stateUpdate/interfaces/ICustomStateUpdate";
 import { CustomStateUpdate } from "../services/stateUpdate/customStateUpdate";
 import { File } from "../dao/file";
-import { Command } from "../services/commands/interfaces/command";
 import path from "path";
 import { readdirSync } from "fs";
 import { Loader } from "../services/loader";
-import { CustomMessage } from "../services/messages/interfaces/customMessage";
+import { AbstractMessage } from "../dto/abstractMessage";
+import { AbstractCommand } from "../dto/abstractCommand";
 
 //.toSelf() sans interface
 const myContainer = new Container({ defaultScope: "Singleton" });
@@ -20,8 +20,8 @@ myContainer.bind<ICustomStateUpdate>(TYPES.ICustomStateUpdate).to(CustomStateUpd
 myContainer.bind<Loader>(Loader).toSelf();
 myContainer.bind<File>(File).toSelf();
 //Load dynamic
-loader<Command>(LOAD_TYPES.command).then(() => console.log("end of command DI load"));
-loader<CustomMessage>(LOAD_TYPES.message).then(() => console.log("end of message DI load"));
+loader<AbstractCommand>(LOAD_TYPES.command).then(() => console.log("end of command DI load"));
+loader<AbstractMessage>(LOAD_TYPES.message).then(() => console.log("end of message DI load"));
 
 
   //set dependency injection for commands

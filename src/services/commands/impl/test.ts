@@ -1,12 +1,13 @@
 import { Client, CommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { Command } from "../interfaces/command";
-import { injectable } from "inversify";
-import { ToLoad } from "../../../dto/toLoad";
+import { AbstractCommand } from "../../../dto/abstractCommand";
 
-@injectable()
-export default class Test implements Command, ToLoad {
-    private cmdName: string = 'test';
+export default class Test extends AbstractCommand {
+
+    constructor(){
+        super();
+        super.cmdName = 'test'
+    }
 
     public execute(client : Client, interaction : CommandInteraction, args?: string []) : void {
         interaction.reply('pouch!');
@@ -17,10 +18,6 @@ export default class Test implements Command, ToLoad {
         return  new SlashCommandBuilder()
         .setName(this.cmdName)
         .setDescription("yolo test") ;
-    }
-
-    public getName(){
-        return this.cmdName;
     }
 }
 

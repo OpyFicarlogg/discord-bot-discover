@@ -1,22 +1,22 @@
 import { readdirSync} from "fs";
 import { injectable } from "inversify";
 import path from "path";
-import { Command } from "./commands/interfaces/command";
 import { ToLoad } from "../dto/toLoad";
 import { myContainer } from "../config/inversify.config";
 import { DYNAMIC_LOAD, LOAD_TYPES } from "../config/types";
-import { CustomMessage } from "./messages/interfaces/customMessage";
+import { AbstractMessage } from "../dto/abstractMessage";
+import { AbstractCommand } from "../dto/abstractCommand";
 
 
 @injectable()
 export class Loader{
 
     public loadCommands() {
-        return this.load<Command>(LOAD_TYPES.command);
+        return this.load<AbstractCommand>(LOAD_TYPES.command);
     }
 
     public loadMessages() {
-        return this.load<CustomMessage>(LOAD_TYPES.message);
+        return this.load<AbstractMessage>(LOAD_TYPES.message);
     }
 
     //https://www.typescriptlang.org/docs/handbook/2/generics.html

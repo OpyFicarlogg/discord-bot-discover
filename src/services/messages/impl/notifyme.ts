@@ -1,24 +1,17 @@
 import { Client, Message } from "discord.js";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 import { TYPES } from "../../../config/types";
 import { IUserDao } from "../../../dao/interfaces/IuserDao";
-import { ToLoad } from "../../../dto/toLoad";
-import { CustomMessage } from "../interfaces/customMessage";
+import { AbstractMessage } from "../../../dto/abstractMessage";
 
-@injectable()
-export default class NotifyMe implements CustomMessage, ToLoad {
-    private msgName: string = 'notifyme';
+export default class NotifyMe extends AbstractMessage {
 
     private _userDao : IUserDao;
 
-    public constructor(
-	    @inject(TYPES.IUserDao) userDao: IUserDao,
-    ) {
+    public constructor(@inject(TYPES.IUserDao) userDao: IUserDao){
+        super();
+        super.msgName = 'notifyme';
         this._userDao = userDao;
-    }
-
-    public getName(){
-        return this.msgName;
     }
 
     public execute(client : Client, msg : Message) : void {

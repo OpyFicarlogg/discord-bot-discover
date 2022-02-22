@@ -15,7 +15,6 @@ export class FileUserDao implements IUserDao{
    }
 
    public addUser(serverName: string ,userId: string) : boolean{
-      //TODO Ajouter un contrôle si le user y est déjà 
       let lstUser : Array<User>= this.getUsers(serverName);
       console.log("lstUser "+lstUser);
       if(lstUser === null){
