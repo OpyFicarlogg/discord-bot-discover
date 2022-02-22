@@ -13,33 +13,29 @@ import { Loader } from "./services/loader";
 
 const loader = myContainer.get<Loader>(Loader);
 
-setTimeout(function () {
-	console.log("start deploy commands");
+console.log("start deploy commands");
 
+let commands : Array<SlashCommandBuilder> =  [];
 
-	let commands : Array<SlashCommandBuilder> =  [];
+loader.loadCommands().forEach( (command) => {
+	commands.push(command.getSlashCommand());
+})
 
-	loader.loadCommands().forEach( (command) => {
-		commands.push(command.getSlashCommand());
-	})
+const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN!);
 
-	const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN!);
+if(process.argv.length == 3 && process.argv[2] == "local"){
+	console.log("Deploy commands local");
+	rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID!, process.env.GUILD_ID!), { body: commands })
+		.then(() => console.log('Successfully registered application commands locally.'))
+		.catch(console.error);
+}
+else{
+	console.log("Deploy commands global");
+	rest.put(Routes.applicationCommands(process.env.CLIENT_ID!), { body: commands })
+		.then(() => console.log('Successfully registered application commands globally.'))
+		.catch(console.error);
+}
 
-	if(process.argv.length == 3 && process.argv[2] == "local"){
-		console.log("Deploy commands local");
-		rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID!, process.env.GUILD_ID!), { body: commands })
-			.then(() => console.log('Successfully registered application commands locally.'))
-			.catch(console.error);
-		
-	}
-	else{
-		console.log("Deploy commands global");
-		rest.put(Routes.applicationCommands(process.env.CLIENT_ID!), { body: commands })
-			.then(() => console.log('Successfully registered application commands globally.'))
-			.catch(console.error);
-	}
-
-}, 3000); //Timeout because aync import in mycontainer
 
 
 

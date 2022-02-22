@@ -1,9 +1,7 @@
 export class User {
-    //TODO: voir comment faire un bon constructeur 
     public constructor(id: string){
         this.id = id;
     }
-
     
     // id of the user 
     public id : string;

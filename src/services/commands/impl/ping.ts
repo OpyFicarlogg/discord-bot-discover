@@ -22,7 +22,7 @@ export default class Ping extends AbstractCommand {
          //Params https://discordjs.guide/interactions/registering-slash-commands.html#options
         return  new SlashCommandBuilder()
         .setName(this.cmdName)
-        .setDescription("this is a ping command pipo") ;
+        .setDescription("this is a ping command") ;
     }
 }
 

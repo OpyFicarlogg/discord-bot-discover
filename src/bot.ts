@@ -52,7 +52,6 @@ client.on('messageCreate', msg => {
 
 //User enter or leave voice channel 
 client.on('voiceStateUpdate', (oldState, newState) => {
-	//TODO: load dynamicly
     customStateUpdate.execute(client,oldState,newState);
 })
 
