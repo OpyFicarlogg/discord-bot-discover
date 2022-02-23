@@ -8,27 +8,30 @@ export class FileUserDao implements IUserDao{
 
    private _file : File;
 
+   private static readonly DEFAULT_MINUTELIMIT = 30;
+   private static readonly DEFAULT_USERLIMIT = 1.
+
    public constructor(
       file : File
    ) {
        this._file = file;
    }
 
-   public addUser(serverName: string ,userId: string) : boolean{
-      let lstUser : Array<User>= this.getUsers(serverName);
-      console.log("lstUser "+lstUser);
-      if(lstUser === null){
-         lstUser = [];
-      }      
-      
-      if(lstUser.findIndex(usr => usr.id = userId) == -1) {
-         lstUser.push(<User> {id: userId,minuteLimit : 30});
-         this._file.writeToFile(serverName,lstUser);
-         return true;
+   public addUser(serverName: string, customUser : User): boolean{
+      if(customUser){
+         //Default values
+         if(!customUser.userLimit) customUser.userLimit = FileUserDao.DEFAULT_USERLIMIT;
+         if(!customUser.minuteLimit) customUser.minuteLimit = FileUserDao.DEFAULT_MINUTELIMIT;
+
+         let lstUser : Array<User>= this.getUsers(serverName);
+         if(lstUser.findIndex(usr => usr.id = customUser.id) == -1) {
+            lstUser.push(customUser);
+            this._file.writeToFile(serverName,lstUser);
+            return true;
+         }
       }
+      
       return false;
-      
-      
    }
 
    public updateUser(serverName: string ,user: User) {
@@ -49,7 +52,11 @@ export class FileUserDao implements IUserDao{
    }
 
    public getUsers (serverName: string) : Array<User>{
-      return this._file.readFromFile(serverName);
+      let lstUser = this._file.readFromFile(serverName);
+      if(lstUser === null){
+         lstUser = [];
+      }  
+      return lstUser;
    }
 }
 

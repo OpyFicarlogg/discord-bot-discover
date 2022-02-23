@@ -29,7 +29,7 @@
     "discordx": "^9.1.12",
     "dotenv": "^14.3.0",
     "inversify": "^6.0.1",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/node": "^17.0.13",

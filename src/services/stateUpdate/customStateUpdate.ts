@@ -1,7 +1,6 @@
-import { VoiceState } from "discord.js";
+import { VoiceState, User as DiscordUser } from "discord.js";
 import { User } from "../../dto/user";
 import { Client } from "discordx";
-import fileUser = require('../../dao/fileUserDao');
 import { inject, injectable } from "inversify";
 import { IUserDao } from "../../dao/interfaces/IuserDao";
 import { TYPES } from "../../config/types";
@@ -23,8 +22,7 @@ export class CustomStateUpdate implements ICustomStateUpdate{
     }
 
     private notifyUsers(client : Client,oldState: VoiceState, newState : VoiceState){
-        //TODO: Ne pas notifier tant que le count n'est pas supérieur au max ? 
-        // Notifier uniquement quand passage de 0 à +0 ? 
+        // TODO: Notifier uniquement quand passage de 0 à +0 ? 
     
         if(this.detectNewUser(oldState,newState)){
             var users : Array<User> = this._userDao.getUsers(newState.guild.id);
@@ -32,8 +30,9 @@ export class CustomStateUpdate implements ICustomStateUpdate{
             //Récupération de l'objet User et send de la notification
             if(users){
                 users.forEach( user  => 
-                    client.users.fetch(user.id).then((discordUser) => {
-                        if(this.toNotify(user)){
+                    client.users.fetch(user.id).then((discordUser : DiscordUser) => {
+                        //Check notification date + userLimit
+                        if(this.toNotify(user) && newState.channel!.members.size >= user.userLimit! ){
                             discordUser.send(`${newState.channel!.members.size} dans le channel ${newState.channel!.name}`);
                             console.log(`Notification envoyé à ${discordUser.username}`);
                             user.lastDateNotification = new Date();
@@ -64,7 +63,7 @@ export class CustomStateUpdate implements ICustomStateUpdate{
         return false;
     }
 
-    private toNotify(user : User) : Boolean {
+    private toNotify(user : User) : boolean {
         if(user.lastDateNotification && user.minuteLimit) {
             let today : Date = new Date();
             let notif : Date = new Date(user.lastDateNotification);
@@ -72,6 +71,5 @@ export class CustomStateUpdate implements ICustomStateUpdate{
             return today.getTime() > notif.getTime();
         }
         return true;
-        
     }
 }
