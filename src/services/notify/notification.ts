@@ -1,8 +1,8 @@
 import {  User } from "discord.js";
-import { User as CustomUser } from "../../dto/user";
+import { User as CustomUser } from "dto/user";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../config/types";
-import { IUserDao } from "../../dao/interfaces/IuserDao";
+import { TYPES } from "config/types";
+import { IUserDao } from "dao/interfaces/IuserDao";
 import { INotification } from "./interfaces/INotification";
 
 @injectable()

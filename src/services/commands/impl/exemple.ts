@@ -1,12 +1,12 @@
 import { Client, CommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { AbstractCommand } from "../../../dto/abstractCommand";
+import { AbstractCommand } from "dto/abstractCommand";
 
-export default class Test extends AbstractCommand {
+export default class Exemple extends AbstractCommand {
 
     constructor(){
         super();
-        super.cmdName = 'test'
+        super.cmdName = 'exemple'
     }
 
     public execute(client : Client, interaction : CommandInteraction, args?: string []) : void {
@@ -17,6 +17,6 @@ export default class Test extends AbstractCommand {
          //Params https://discordjs.guide/interactions/registering-slash-commands.html#options
         return  new SlashCommandBuilder()
         .setName(this.cmdName)
-        .setDescription("yolo test") ;
+        .setDescription("exemple") ;
     }
 }

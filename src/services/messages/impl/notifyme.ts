@@ -1,9 +1,9 @@
 import { Client, Message } from "discord.js";
 import { inject } from "inversify";
-import { TYPES } from "../../../config/types";
-import { AbstractMessage } from "../../../dto/abstractMessage";
-import { User } from "../../../dto/user";
-import { INotification } from "../../notify/interfaces/INotification";
+import { TYPES } from "config/types";
+import { AbstractMessage } from "dto/abstractMessage";
+import { User } from "dto/user";
+import { INotification } from "@notify/interfaces/INotification";
 
 export default class NotifyMe extends AbstractMessage {
     private _notification : INotification;

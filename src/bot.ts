@@ -1,7 +1,7 @@
 // Run dotenv
 require('dotenv').config();
-
 import "reflect-metadata";
+
 import { Client } from "discordx";
 import { Intents } from "discord.js";
 
@@ -14,7 +14,6 @@ import { AbstractMessage } from "./dto/abstractMessage";
 import { AbstractCommand } from "./dto/abstractCommand";
 
 //Dependency injection 
-//const customMessage : ICustomMessage = myContainer.get<ICustomMessage>(TYPES.ICustomMessage);
 const customStateUpdate : ICustomStateUpdate = myContainer.get<ICustomStateUpdate>(TYPES.ICustomStateUpdate);
 const loader = myContainer.get<Loader>(Loader);
 //Intents.FLAGS.GUILD_VOICE_STATES pour voiceStateUpdate

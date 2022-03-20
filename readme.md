@@ -5,11 +5,22 @@ Deux commandes dans le package.json:
 * `deploy` : Register des slash commands dans l'application 
 * `deploy-dev` : Register des slash commands dans la guild 
 
-Ce bot permet d'être notifié si il y a des personnes connectées sur le serveur.   
-* Il est possible de s'ajouter à la liste de notification avec la commande `!notifyme` ou `/notifyme`
-* Il existe la possibilité d'arrêter les notifications sur un utilisateur `!stopnotify` ou `/stopnotify` 
-* Il existe une commande pour voir si le bot répond `!ping` ou `/ping`
-* La commande `!help` résume les différents points 
+Ce bot permet d'être notifié si il y a des personnes connectées sur le serveur.  
+
+Il est possible d'intérargir avec le bot de deux façons : 
+
+#### Avec les commandes chat (préfixe !)
+* Activer la notification `!notifyme`
+* Arrêter les notifications `!stopnotify`
+* Voir si le bot répond `!ping`
+* Aide sur les différentes commandes `!help`
+
+#### Avec les slash commands
+* Activer la notification `/notifyme` avec deux paramètres optionnels:
+    - userlimit : Défini à partir de combien d'utilisateurs on souhaite être notifié.
+    - minutelimit : Défini tout les combiens de minutes on souhaite être notifié.
+* Arrêter les notifications `/stopnotify`
+* Voir si le bot répond `/ping`
 
 ## Fichier de configuration 
 Modifier le fichier .env-exemple et le renommer en .env
@@ -20,8 +31,8 @@ Modifier le fichier .env-exemple et le renommer en .env
 - Envoi des commandes en global : `npm run deploy`
 
 #### Evolutions à venir 
-* Définition d'options sur l'utilisateur à notifier (à partir de x user, tous les x minutes/heures, etc...)
 * Mettre le projet starter dans NPM
+* Ajouter des tu 
 
 
 
@@ -33,6 +44,8 @@ Modifier le fichier .env-exemple et le renommer en .env
 
 ### Creation du projet 
 * https://medium.com/davao-js/2019-tutorial-creating-your-first-simple-discord-bot-47fc836a170b
+* https://dev.to/oceanroleplay/creating-discord-bot-client-from-scratch-3hpp
+* exemple with slashcommands https://github.com/oceanroleplay/discord.ts-example/tree/1cd43bb343af2a5b4bf6df2b51786be0c98bd706/src/commands
 * https://stackoverflow.com/questions/68701446/discord-api-valid-intents-must-be-provided-for-the-client
 
 ### Installation nodejs  17 
@@ -50,6 +63,7 @@ tuto : https://www.youtube.com/watch?v=mUCYXZ4Gx7E
 
 ### Passage en typescript 
 https://dev.to/oceanroleplay/create-your-discord-bot-by-using-typescript-and-decorators-17gm
+https://mariusschulz.com/blog/dynamic-import-expressions-in-typescript
 
 Discord pour typescript :  
 `npm install discordx reflect-metadata discord.js`

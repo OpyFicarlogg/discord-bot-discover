@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Client, CommandInteraction, Message } from "discord.js";
 import { injectable } from "inversify";
-import { Command } from "../services/commands/interfaces/command";
+import { Command } from "services/commands/interfaces/command";
 import { ToLoad } from "./toLoad";
 
 @injectable()

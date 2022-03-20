@@ -1,5 +1,5 @@
 import {  User } from "discord.js";
-import { User as CustomUser } from "../../../dto/user";
+import { User as CustomUser } from "dto/user";
 
 export interface  INotification  { 
 

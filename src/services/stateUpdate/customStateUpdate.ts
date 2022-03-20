@@ -1,9 +1,9 @@
 import { VoiceState, User as DiscordUser } from "discord.js";
-import { User } from "../../dto/user";
+import { User } from "dto/user";
 import { Client } from "discordx";
 import { inject, injectable } from "inversify";
-import { IUserDao } from "../../dao/interfaces/IuserDao";
-import { TYPES } from "../../config/types";
+import { IUserDao } from "dao/interfaces/IuserDao";
+import { TYPES } from "config/types";
 import { ICustomStateUpdate } from "./interfaces/ICustomStateUpdate";
 
 @injectable()
