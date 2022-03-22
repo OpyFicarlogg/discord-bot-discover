@@ -12,11 +12,10 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import 'jest';
 import createMockInstance from "jest-create-mock-instance";
 
-describe('Notifyme', () => {
+describe('Notifyme commands', () => {
     const discordMock = new DiscordMock();
     let instance: NotifyMe;
     const mockedNotif : jest.Mocked<Notification> = createMockInstance (Notification);  
-
     beforeEach(() => {       
         instance = new NotifyMe(mockedNotif);  
     });

@@ -1,4 +1,4 @@
-import { Client, CommandInteraction, CommandInteractionOptionResolver, User } from "discord.js";
+import { Client, CommandInteraction, CommandInteractionOptionResolver, Guild, Message, User } from "discord.js";
 import { RawInteractionData, RawUserData } from "discord.js/typings/rawDataTypes";
 import createMockInstance from "jest-create-mock-instance";
 
@@ -20,10 +20,15 @@ export class DiscordMock{
     private mockedCommandInteraction! : jest.Mocked<CommandInteraction>;
     private mockedUser! : jest.Mocked<User> 
     private mockedClient! : jest.Mocked<Client>;
+    private mockedMessage! : jest.Mocked<Message>;
+    private mockedGuild! : jest.Mocked<Guild>;
+    private static readonly GUILDID : string = "abc";
     constructor(){
         this.mockClient();
         this.mockUser();
         this.mockCommand();
+        this.mockGuild();
+        this.mockMessage();
     }
 
     private mockClient() {
@@ -33,6 +38,7 @@ export class DiscordMock{
     private mockUser() {
         this.mockedUser = createMockInstance(MockUser);
         this.mockedUser.id = "12";
+        this.mockedUser.username = "test";
     }
 
 
@@ -47,9 +53,23 @@ export class DiscordMock{
         this.mockedCommandInteraction  = createMockInstance(MockCommandInteraction);
         let mockedOptions = {} as jest.Mocked<CommandInteractionOptionResolver>;
         this.mockedCommandInteraction.options = mockedOptions;
-        this.mockedCommandInteraction.guildId ="abc";
+        this.mockedCommandInteraction.guildId =DiscordMock.GUILDID;
         this.mockedCommandInteraction.user = this.mockedUser;
     }
+
+    private mockGuild(){
+        this.mockedGuild = {}  as jest.Mocked<Guild>;
+        this.mockedGuild.id = DiscordMock.GUILDID;
+    }
+
+    private mockMessage(){
+        this.mockedMessage = {}  as jest.Mocked<Message>;
+        this.mockedMessage.author = this.mockedUser;
+        Reflect.set(this.mockedMessage, 'guild',this.mockedGuild);
+        //TODO: check how to user mockImplementation
+        this.mockedMessage.reply = jest.fn();
+    }
+
 
     public getMockClient() : jest.Mocked<Client>{
         return this.mockedClient;
@@ -61,6 +81,10 @@ export class DiscordMock{
 
     public getMockCommandInteraction() : jest.Mocked<CommandInteraction>{
         return this.mockedCommandInteraction;
+    }
+
+    public getMockMessage() : jest.Mocked<Message>{
+        return this.mockedMessage;
     }
 }
        

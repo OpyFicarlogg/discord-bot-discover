@@ -11,7 +11,7 @@ import 'jest';
 import createMockInstance from "jest-create-mock-instance";
 
 
-describe('StopNotify', () => {
+describe('StopNotify commands', () => {
     const discordMock = new DiscordMock();
     let instance: StopNotify;
     const mockedNotif : jest.Mocked<Notification> = createMockInstance (Notification);  

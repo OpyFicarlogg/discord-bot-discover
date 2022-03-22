@@ -9,11 +9,10 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 
 import 'jest';
 import createMockInstance from "jest-create-mock-instance";
-import { Discord } from "discordx";
 
 
 
-describe('File', () => {
+describe('ping commands', () => {
     const discordMock = new DiscordMock();
     let instance: Ping;
     const commandInteraction = discordMock.getMockCommandInteraction();
