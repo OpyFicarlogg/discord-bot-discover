@@ -1,6 +1,5 @@
-import { VoiceState, User as DiscordUser } from "discord.js";
-import { User } from "dto/user";
-import { Client } from "discordx";
+import { VoiceState, Client, User as DiscordUser } from "discord.js";
+import { User ,} from "dto/user";
 import { inject, injectable } from "inversify";
 import { IUserDao } from "dao/interfaces/IuserDao";
 import { TYPES } from "config/types";
@@ -53,10 +52,10 @@ export class CustomStateUpdate implements ICustomStateUpdate{
         let oldUserChannel = oldState.channel;
       
         // User Joins a voice channel
-        if(oldUserChannel === null && newUserChannel !== undefined) {
+        if(!oldUserChannel && newUserChannel) {
             console.log(`Nouvel utilisateur connecté: ${newState.member!.user.username}`);
             return true;       
-        } else if(newUserChannel === null){
+        } else if(!newUserChannel){
             // User leaves a voice channel
           return false;
         }

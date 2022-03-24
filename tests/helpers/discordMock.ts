@@ -1,4 +1,4 @@
-import { Client, CommandInteraction, CommandInteractionOptionResolver, Guild, Message, User } from "discord.js";
+import { Client, Collection, CommandInteraction, CommandInteractionOptionResolver, Guild, GuildMember, Message, Snowflake, User, UserManager, VoiceBasedChannel, VoiceState } from "discord.js";
 import { RawInteractionData, RawUserData } from "discord.js/typings/rawDataTypes";
 import createMockInstance from "jest-create-mock-instance";
 
@@ -22,6 +22,8 @@ export class DiscordMock{
     private mockedClient! : jest.Mocked<Client>;
     private mockedMessage! : jest.Mocked<Message>;
     private mockedGuild! : jest.Mocked<Guild>;
+    private mockedNewVoiceState! : jest.Mocked<VoiceState>;
+    private mockedOldVoiceState! : jest.Mocked<VoiceState>;
     private static readonly GUILDID : string = "abc";
     constructor(){
         this.mockClient();
@@ -29,16 +31,23 @@ export class DiscordMock{
         this.mockCommand();
         this.mockGuild();
         this.mockMessage();
+        this.mockNewVoiceState();
+        this.mockOldVoiceState();
     }
 
     private mockClient() {
+        let userManager = {} as jest.Mocked<UserManager>;
+        userManager.fetch = jest.fn().mockImplementation(() => Promise.resolve(this.getMockUser()));
+
         this.mockedClient =  createMockInstance(Client);
+        this.mockedClient.users = userManager;
     }
 
     private mockUser() {
         this.mockedUser = createMockInstance(MockUser);
         this.mockedUser.id = "12";
         this.mockedUser.username = "test";
+        this.mockedUser.bot= false;
     }
 
 
@@ -70,7 +79,30 @@ export class DiscordMock{
         this.mockedMessage.reply = jest.fn();
     }
 
+    private mockNewVoiceState(){
+        this.mockedNewVoiceState = {}  as jest.Mocked<VoiceState>;
+        //voice channel creation
+        let voiceChannel = {} as VoiceBasedChannel;
+        Reflect.set(voiceChannel, 'members',new Collection<Snowflake, GuildMember>());
+        voiceChannel.members.set("1",this.newMockGuildMember());
 
+        this.mockedNewVoiceState.guild = this.getMockGuild();
+        Reflect.set(this.mockedNewVoiceState, 'channel',voiceChannel);
+        Reflect.set(this.mockedNewVoiceState, 'member',this.newMockGuildMember());
+    }
+
+    private mockOldVoiceState(){
+        this.mockedOldVoiceState = {}  as jest.Mocked<VoiceState>;
+        Reflect.set(this.mockedOldVoiceState, 'channel',null);
+        Reflect.set(this.mockedOldVoiceState, 'member',this.newMockGuildMember());
+    }
+
+
+
+
+
+
+    
     public getMockClient() : jest.Mocked<Client>{
         return this.mockedClient;
     }
@@ -86,5 +118,23 @@ export class DiscordMock{
     public getMockMessage() : jest.Mocked<Message>{
         return this.mockedMessage;
     }
+
+    public getMockGuild() : jest.Mocked<Guild>{
+        return this.mockedGuild;
+    }
+
+    public getMockNewVoiceState() : jest.Mocked<VoiceState>{
+        return this.mockedNewVoiceState;
+    }
+
+    public getMockOldVoiceState() : jest.Mocked<VoiceState>{
+        return this.mockedOldVoiceState;
+    }
+
+    public newMockGuildMember() : jest.Mocked<GuildMember> {
+        let guildMember = {}  as jest.Mocked<GuildMember>;
+        guildMember.user = this.getMockUser();
+        return guildMember;
+      }
 }
        
