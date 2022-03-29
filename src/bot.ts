@@ -2,16 +2,15 @@
 require('dotenv').config();
 import "reflect-metadata";
 
-import { Client } from "discordx";
-import { Intents } from "discord.js";
+import { Intents,Client } from "discord.js";
 
-import { myContainer } from "./config/inversify.config";
-import { TYPES } from "./config/types";
+import { myContainer } from "config/inversify.config";
+import { TYPES } from "config/types";
 
-import { ICustomStateUpdate } from "./services/stateUpdate/interfaces/ICustomStateUpdate";
-import { Loader } from "./services/loader";
-import { AbstractMessage } from "./dto/abstractMessage";
-import { AbstractCommand } from "./dto/abstractCommand";
+import { ICustomStateUpdate } from "services/stateUpdate/interfaces/ICustomStateUpdate";
+import { Loader } from "services/loader";
+import { AbstractMessage } from "dto/abstractMessage";
+import { AbstractCommand } from "dto/abstractCommand";
 
 //Dependency injection 
 const customStateUpdate : ICustomStateUpdate = myContainer.get<ICustomStateUpdate>(TYPES.ICustomStateUpdate);

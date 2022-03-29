@@ -31,8 +31,7 @@ Modifier le fichier .env-exemple et le renommer en .env
 - Envoi des commandes en global : `npm run deploy`
 
 #### Evolutions à venir 
-* Mettre le projet starter dans NPM
-* Ajouter des tu 
+* Gérer la langue du serveur et mettre le texte en correspondance 
 
 
 
@@ -66,7 +65,8 @@ https://dev.to/oceanroleplay/create-your-discord-bot-by-using-typescript-and-dec
 https://mariusschulz.com/blog/dynamic-import-expressions-in-typescript
 
 Discord pour typescript :  
-`npm install discordx reflect-metadata discord.js`
+`npm install discordx reflect-metadata discord.js`  
+Discordx non obligatoire
 
 Installation typescript : 
 `npm install --save-dev @types/node typescript`
@@ -91,6 +91,56 @@ Le framework choisi est inversify (https://github.com/inversify/InversifyJS), il
 
 * La classe `types.ts` défini les différents types qui seront utilisés. 
 * La classe `inversify.config.ts` défini le lien entre les injections. 
+
+
+### Gestion des paths 
+Pour ne pas avoir partout des paths à rallonge, il a fallu configurer le tsconfig.json pour définir que le point d'entrée est `src`, ou encore des raccourcis de path   
+
+Ce qui permet de remplacer un chemin `../../../../../machin` par `/machin` 
+
+#### Modification dans le `tsconfig.json`:
+```
+    "moduleResolution": "node",   
+     "baseUrl": "src",           
+     "paths": {
+       "@notify/*":["services/notify/*"], 
+     },
+```
+Il faut également ajouter `src` dans la partie `ìnclude`
+`"include": ["src","tests"]`
+
+#### Modification pour Jest
+Pour faire fonctionner les paths dans la partie Jest, il faut également ajouter  la dépendance vers `require-json5` qui permet de faire un require sur le tsconfig avec des commentaires
+* `npm i require-json5`   
+
+Dans le jest.config.ts ajouter: 
+```
+const requireJSON5 = require('require-json5');
+const {compilerOptions} = requireJSON5('./tsconfig.json');
+const { pathsToModuleNameMapper } = require('ts-jest')
+
+modulePaths: [compilerOptions.baseUrl],
+moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
+```
+
+
+### Test unitaires 
+
+Les dépendances:  
+* npm install jest @types/jest ts-jest -D
+* npm install --save-dev @types/jest
+* npm i jest-create-mock-instance
+
+Création du fichier jest:  
+`jest --init`
+
+Pour que le fichier jest soit pris en compte, il doit avec dans son nom `test`
+
+Pour exécuter jest:  
+`npm run test`
+
+Le résultat de la couverture de code se retrouve dans le dossier `coverage`, il est possible de voir le résultat dans `coverage/Icov-report/index.html`
+
 
 
 ### Run sur un autre serveur en ligne 
