@@ -1,3 +1,26 @@
+## Start with the bot 
+
+#### Install project dependencies
+* Go to the main directory of the project: `cd discord-bot-discover`
+* Install all dependencies: `npm install`
+
+#### Configuration file
+Copy the .env.exemple as .env
+* `cp .env.example .env`  
+* `rm ./.env.example`  
+You need to define in this file the discord Token, the client id of the bot, and the guild id (discord server id) for test purpose
+
+#### Execution of the bot
+- Run the bot: `npm run start`
+- Run the bot for debug purpose (auto reload and faster): `npm run start-dev`
+- Send slash commands definition to a guild in dev : `npm run deploy-dev`
+- Sens slash commands definition global : `npm run deploy`
+- Launch all unit test : `npm run test`
+
+
+
+
+
 ## Description du bot 
 
 Le fichier deploy-commands.ts permet de charger les commandes dans la guild ou sur le bot.  
@@ -22,13 +45,6 @@ Il est possible d'intérargir avec le bot de deux façons :
 * Arrêter les notifications `/stopnotify`
 * Voir si le bot répond `/ping`
 
-## Fichier de configuration 
-Modifier le fichier .env-exemple et le renommer en .env
-
-## Execution du bot  
-- Exécution du bot: `npm run start`
-- Envoi des commandes sur la guild de dev : `npm run deploy-dev`
-- Envoi des commandes en global : `npm run deploy`
 
 #### Evolutions à venir 
 * Gérer la langue du serveur et mettre le texte en correspondance 

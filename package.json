@@ -33,7 +33,8 @@
     "inversify": "^6.0.1",
     "jest-create-mock-instance": "^2.0.0",
     "reflect-metadata": "^0.1.13",
-    "require-json5": "^1.1.0"
+    "require-json5": "^1.1.0",
+    "tsconfig-paths": "^3.13.0"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
