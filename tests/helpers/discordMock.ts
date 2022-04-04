@@ -57,7 +57,6 @@ export class DiscordMock{
     // mock private method https://stackoverflow.com/questions/63587868/how-can-i-mock-a-private-property-in-a-class-im-trying-to-test-in-jest 
     // Internal class https://stackoverflow.com/questions/65687036/accessing-a-private-constructor
 
-    //TODO: voir pour cast let test = mockedOptions as Jest.Mocked<typeof mockedOptions>; 
     private mockCommand(){
         this.mockedCommandInteraction  = createMockInstance(MockCommandInteraction);
         let mockedOptions = {} as jest.Mocked<CommandInteractionOptionResolver>;
@@ -75,7 +74,6 @@ export class DiscordMock{
         this.mockedMessage = {}  as jest.Mocked<Message>;
         this.mockedMessage.author = this.mockedUser;
         Reflect.set(this.mockedMessage, 'guild',this.mockedGuild);
-        //TODO: check how to user mockImplementation
         this.mockedMessage.reply = jest.fn();
     }
 
