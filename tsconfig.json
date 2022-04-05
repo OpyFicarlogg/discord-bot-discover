@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "ES2021",
+      "noImplicitAny": true,
+      "sourceMap": true,
+      "strict": true,
+      "outDir": "build",
+      "emitDecoratorMetadata": true, // required
+      "experimentalDecorators": true, // required
+      "declaration": false,
+      "importHelpers": true, // required
+      "forceConsistentCasingInFileNames": true,
+      "lib": ["ES2021", "esnext.asynciterable"],
+      "moduleResolution": "node",
+
+      //Added from https://www.youtube.com/watch?v=mUCYXZ4Gx7E
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true,
+      "skipLibCheck": true,
+      "skipDefaultLibCheck": true
+    },
+    "exclude": ["node_modules"],
+    "include": ["src"]
+  }
+
+// {   
+//     "compilerOptions": {
+//       "outDir": "./build",
+//       "allowJs": true,
+//       "target": "es5"
+//     },
+//     "include" : ["./src/**/*"]
+// }

@@ -1,12 +1,40 @@
 {
   "name": "discord-bot-discover",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "main": "bot.js",
   "scripts": {
+    "build": "tsc",
+    "jstart": "node build/bot.js",
+    "start": "ts-node-dev --respawn --transpile-only --poll ./src/bot.ts",
+    "deploy": "ts-node-dev --respawn --transpile-only --poll ./src/deploy-commands.ts",
+    "deploy-dev": "ts-node-dev --respawn --transpile-only --poll ./src/deploy-commands.ts local",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpyFicarlogg/discord-bot-discover.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OpyFicarlogg/discord-bot-discover/issues"
+  },
+  "homepage": "https://github.com/OpyFicarlogg/discord-bot-discover#readme",
+  "description": "",
+  "dependencies": {
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.27.1",
+    "discord.js": "^13.6.0",
+    "discordx": "^9.1.12",
+    "dotenv": "^14.3.0",
+    "inversify": "^6.0.1",
+    "reflect-metadata": "^0.1.13",
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.13",
+    "ts-node": "^10.5.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  }
 }
