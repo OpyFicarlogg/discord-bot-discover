@@ -2,6 +2,7 @@
 /node_modules
 /srvFiles
 /build
+/coverage
 
 ##Exclude env for token and regenerate it for security
 .env

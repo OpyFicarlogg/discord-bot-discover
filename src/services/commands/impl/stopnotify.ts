@@ -1,9 +1,9 @@
 import { Client, CommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { AbstractCommand } from "../../../dto/abstractCommand";
-import { INotification } from "../../notify/interfaces/INotification";
+import { AbstractCommand } from "dto/abstractCommand";
+import { INotification } from "@notify/interfaces/INotification";
 import { inject } from "inversify";
-import { TYPES } from "../../../config/types";
+import { TYPES } from "config/types";
 
 export default class StopNotify extends AbstractCommand {
 

@@ -1,7 +1,8 @@
-import { User } from "../../dto/user";
+import { User } from "dto/user";
 
 export interface IUserDao {
-    addUser(serverName: string ,userId: string) : boolean;
+
+    addUser(serverName: string, customUser : User): boolean;
 
     updateUser(serverName: string ,user: User) : void;
 

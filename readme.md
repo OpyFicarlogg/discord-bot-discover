@@ -1,40 +1,88 @@
-## Creation du projet 
+## Start with the bot 
+
+#### Install project dependencies
+* Go to the main directory of the project: `cd discord-bot-discover`
+* Install all dependencies: `npm install`
+
+#### Configuration file
+Copy the .env.exemple as .env
+* `cp .env.example .env`  
+* `rm ./.env.example`  
+You need to define in this file the discord Token, the client id of the bot, and the guild id (discord server id) for test purpose
+
+#### Execution of the bot
+- Run the bot: `npm run start`
+- Run the bot for debug purpose (auto reload and faster): `npm run start-dev`
+- Send slash commands definition to a guild in dev : `npm run deploy-dev`
+- Sens slash commands definition global : `npm run deploy`
+- Launch all unit test : `npm run test`
+
+
+
+
+
+## Description du bot 
+
+Le fichier deploy-commands.ts permet de charger les commandes dans la guild ou sur le bot.  
+Deux commandes dans le package.json:  
+* `deploy` : Register des slash commands dans l'application 
+* `deploy-dev` : Register des slash commands dans la guild 
+
+Ce bot permet d'être notifié si il y a des personnes connectées sur le serveur.  
+
+Il est possible d'intérargir avec le bot de deux façons : 
+
+#### Avec les commandes chat (préfixe !)
+* Activer la notification `!notifyme`
+* Arrêter les notifications `!stopnotify`
+* Voir si le bot répond `!ping`
+* Aide sur les différentes commandes `!help`
+
+#### Avec les slash commands
+* Activer la notification `/notifyme` avec deux paramètres optionnels:
+    - userlimit : Défini à partir de combien d'utilisateurs on souhaite être notifié.
+    - minutelimit : Défini tout les combiens de minutes on souhaite être notifié.
+* Arrêter les notifications `/stopnotify`
+* Voir si le bot répond `/ping`
+
+
+#### Evolutions à venir 
+* Gérer la langue du serveur et mettre le texte en correspondance 
+
+
+
+
+
+
+
+# Details sur le projet 
 
 ### Creation du projet 
 * https://medium.com/davao-js/2019-tutorial-creating-your-first-simple-discord-bot-47fc836a170b
+* https://dev.to/oceanroleplay/creating-discord-bot-client-from-scratch-3hpp
+* exemple with slashcommands https://github.com/oceanroleplay/discord.ts-example/tree/1cd43bb343af2a5b4bf6df2b51786be0c98bd706/src/commands
 * https://stackoverflow.com/questions/68701446/discord-api-valid-intents-must-be-provided-for-the-client
 
-## Installation nodejs  17 
+### Installation nodejs  17 
 https://joshtronic.com/2021/10/24/how-to-install-nodejs-17-on-ubuntu-lts/
 
 `npm init -y`  
 `npm install --save discord.js dotenv`  
 `npm install @discordjs/rest discord-api-types`
 
-## Execution du bot 
-En js simple: `node bot.js`
-
-Suite au passage via typescript:  
-- Compilation `npm run build`  
-- Exécution `npm start`
-
-Via ts-node: 
-- `ts-node-dev --respawn --transpile-only --poll ./src/bot.ts`
-
-Avantage de ts-node: Pas besoin de compiler via build, et reload si modification dans le code 
-
-
-## Installation des dépendances pour ts-node 
+### Installation des dépendances pour ts-node 
+TS-node permet de ne plus avoir à build en js pour exécuter, mais d'exécuter directement les ts. Plus simple pour le debug.  
 tuto : https://www.youtube.com/watch?v=mUCYXZ4Gx7E  
 - `npm install -D ts-node-dev`
 - `npm install -D ts-node`
 
-
-## Passage en typescript 
+### Passage en typescript 
 https://dev.to/oceanroleplay/create-your-discord-bot-by-using-typescript-and-decorators-17gm
+https://mariusschulz.com/blog/dynamic-import-expressions-in-typescript
 
 Discord pour typescript :  
-`npm install discordx reflect-metadata discord.js`
+`npm install discordx reflect-metadata discord.js`  
+Discordx non obligatoire
 
 Installation typescript : 
 `npm install --save-dev @types/node typescript`
@@ -42,7 +90,14 @@ Installation typescript :
 Compilation : 
 `tsc --pretty`
 
-## Injection de dépendance 
+en js simple: `node bot.js`
+
+Suite au passage via typescript:
+
+Compilation `npm run build ` or `tsc`  
+Exécution `node build/bot.js` or `jstart`
+
+### Injection de dépendance 
 
 Comparatifs des CDI:  
 https://blog.logrocket.com/top-five-typescript-dependency-injection-containers/  
@@ -54,25 +109,64 @@ Le framework choisi est inversify (https://github.com/inversify/InversifyJS), il
 * La classe `inversify.config.ts` défini le lien entre les injections. 
 
 
-## Run sur un autre serveur en ligne 
+### Gestion des paths 
+Pour ne pas avoir partout des paths à rallonge, il a fallu configurer le tsconfig.json pour définir que le point d'entrée est `src`, ou encore des raccourcis de path   
+
+Ce qui permet de remplacer un chemin `../../../../../machin` par `/machin` 
+
+#### Modification dans le `tsconfig.json`:
+```
+    "moduleResolution": "node",   
+     "baseUrl": "src",           
+     "paths": {
+       "@notify/*":["services/notify/*"], 
+     },
+```
+Il faut également ajouter `src` dans la partie `ìnclude`
+`"include": ["src","tests"]`
+
+#### Modification pour Jest
+Pour faire fonctionner les paths dans la partie Jest, il faut également ajouter  la dépendance vers `require-json5` qui permet de faire un require sur le tsconfig avec des commentaires
+* `npm i require-json5`   
+
+Dans le jest.config.ts ajouter: 
+```
+const requireJSON5 = require('require-json5');
+const {compilerOptions} = requireJSON5('./tsconfig.json');
+const { pathsToModuleNameMapper } = require('ts-jest')
+
+modulePaths: [compilerOptions.baseUrl],
+moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
+```
+
+
+### Test unitaires 
+
+Les dépendances:  
+* npm install jest @types/jest ts-jest -D
+* npm install --save-dev @types/jest
+* npm i jest-create-mock-instance
+
+Création du fichier jest:  
+`jest --init`
+
+Pour que le fichier jest soit pris en compte, il doit avec dans son nom `test`
+
+Pour exécuter jest:  
+`npm run test`
+
+Le résultat de la couverture de code se retrouve dans le dossier `coverage`, il est possible de voir le résultat dans `coverage/Icov-report/index.html`
+
+
+
+### Run sur un autre serveur en ligne 
 https://medium.com/davao-js/v2-tutorial-deploy-your-discord-bot-to-heroku-part-2-9a37572d5de4
 
 https://autocode.com/guides/how-to-build-a-discord-bot/
 
 
 
-## Description du bot 
 
-Le fichier deploy-commands.ts permet de charger les commandes dans la guild ou sur le bot.  
-Deux commandes dans le package.json:  
-* `deploy` : Register des slash commands dans l'application 
-* `deploy-dev` : Register des slash commands dans la guild 
 
-Ce bot permet d'être notifié si il y a des personnes connectées sur le serveur.   
-* Il est possible de s'ajouter à la liste de notification avec la commande `!notifyme`
-* Il existe la possibilité d'arrêter les notifications sur un utilisateur `!stopnotify` 
-* Il existe une commande pour voir si le bot répond `!ping`
-* La commande `!help` résume les différents points 
 
-#### Evolutions à venir 
-* Définition d'options sur l'utilisateur à notifier (à partir de x user, tous les x minutes/heures, etc...)
+Versionning: https://semver.org/lang/fr/
