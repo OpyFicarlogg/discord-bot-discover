@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { IUserDao } from './interfaces/IuserDao';
-import { User } from '../dto/user';
+import { User } from 'dto/user';
 import { File } from './file';
 
 @injectable()
@@ -8,32 +8,36 @@ export class FileUserDao implements IUserDao{
 
    private _file : File;
 
+   private static readonly DEFAULT_MINUTELIMIT = 30;
+   private static readonly DEFAULT_USERLIMIT = 1.
+
    public constructor(
       file : File
    ) {
        this._file = file;
    }
 
-   public addUser(serverName: string ,userId: string) : boolean{
+   public addUser(serverName: string, customUser : User): boolean{
+      //Default values
+      if(!customUser.userLimit) customUser.userLimit = FileUserDao.DEFAULT_USERLIMIT;
+      if(!customUser.minuteLimit) customUser.minuteLimit = FileUserDao.DEFAULT_MINUTELIMIT;
+
       let lstUser : Array<User>= this.getUsers(serverName);
-      console.log("lstUser "+lstUser);
-      if(lstUser === null){
-         lstUser = [];
-      }      
-      
-      if(lstUser.findIndex(usr => usr.id = userId) == -1) {
-         lstUser.push(<User> {id: userId,minuteLimit : 30});
+      if(lstUser.findIndex(usr => usr.id = customUser.id) === -1) {
+         lstUser.push(customUser);
          this._file.writeToFile(serverName,lstUser);
          return true;
       }
-      return false;
+      else {
+         return false;
+      }
       
       
    }
 
    public updateUser(serverName: string ,user: User) {
       let lstUser : Array<User>= this.getUsers(serverName);
-      let index : number = lstUser.findIndex(usr => usr = user);
+      let index : number = lstUser.findIndex((usr : User) => usr.id ===  user.id);
       if(index != -1) {
          lstUser[index] = user;
          this._file.writeToFile(serverName,lstUser);
@@ -43,13 +47,22 @@ export class FileUserDao implements IUserDao{
    public deleteUser(serverName: string ,userId: string){
       let lstUser : Array<User>= this.getUsers(serverName);
       if(lstUser.length >0){
-         lstUser.splice(lstUser.findIndex(usr => usr.id = userId),1);
+         let index = lstUser.findIndex(usr => usr.id === userId);
+         if(index != -1){
+            lstUser.splice(index,1);
+            this._file.writeToFile(serverName,lstUser);
+         }
+         
       }
-      this._file.writeToFile(serverName,lstUser);
+      
    }
 
    public getUsers (serverName: string) : Array<User>{
-      return this._file.readFromFile(serverName);
+      let lstUser : Array<User> = this._file.readFromFile(serverName);
+      if(lstUser === null){
+         lstUser = [];
+      }  
+      return lstUser;
    }
 }
 

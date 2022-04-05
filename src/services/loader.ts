@@ -1,11 +1,11 @@
 import { readdirSync} from "fs";
 import { injectable } from "inversify";
 import path from "path";
-import { ToLoad } from "../dto/toLoad";
-import { myContainer } from "../config/inversify.config";
-import { DYNAMIC_LOAD, LOAD_TYPES } from "../config/types";
-import { AbstractMessage } from "../dto/abstractMessage";
-import { AbstractCommand } from "../dto/abstractCommand";
+import { ToLoad } from "dto/toLoad";
+import { myContainer } from "config/inversify.config";
+import { DYNAMIC_LOAD, LOAD_TYPES } from "config/types";
+import { AbstractMessage } from "dto/abstractMessage";
+import { AbstractCommand } from "dto/abstractCommand";
 
 
 @injectable()

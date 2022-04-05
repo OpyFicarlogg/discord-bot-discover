@@ -7,8 +7,6 @@ export class User {
     public id : string;
     // define last notification date 
     public lastDateNotification : Date | undefined | null;
-    // define the number of user from the last notification 
-    public lastNumberUser : number | undefined | null;
     //define number of user to be notified 
     public userLimit: number | undefined | null;
     // define time in minute before next notification 

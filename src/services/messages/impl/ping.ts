@@ -1,5 +1,5 @@
 import { Client, Message } from "discord.js";
-import { AbstractMessage } from "../../../dto/abstractMessage";
+import { AbstractMessage } from "dto/abstractMessage";
 
 export default class Ping extends AbstractMessage {
     

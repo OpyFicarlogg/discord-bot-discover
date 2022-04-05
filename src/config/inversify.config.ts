@@ -1,18 +1,22 @@
 
 import { Container } from "inversify";
-import { DYNAMIC_LOAD, LOAD_TYPES, TYPES } from "./types";
-import { FileUserDao } from "../dao/fileUserDao";
-import { IUserDao } from "../dao/interfaces/IuserDao";
-import { ICustomStateUpdate } from "../services/stateUpdate/interfaces/ICustomStateUpdate";
-import { CustomStateUpdate } from "../services/stateUpdate/customStateUpdate";
-import { File } from "../dao/file";
 import path from "path";
 import { readdirSync } from "fs";
-import { Loader } from "../services/loader";
-import { AbstractMessage } from "../dto/abstractMessage";
-import { AbstractCommand } from "../dto/abstractCommand";
-import { INotification } from "../services/notify/interfaces/INotification";
-import Notification from "../services/notify/notification";
+
+import { DYNAMIC_LOAD, LOAD_TYPES, TYPES } from "./types";
+
+import { IUserDao } from "dao/interfaces/IuserDao";
+import { File } from "dao/file";
+import { FileUserDao } from "dao/fileUserDao";
+
+import { AbstractMessage } from "dto/abstractMessage";
+import { AbstractCommand } from "dto/abstractCommand";
+
+import { ICustomStateUpdate } from "services/stateUpdate/interfaces/ICustomStateUpdate";
+import { CustomStateUpdate } from "services/stateUpdate/customStateUpdate";
+import { Loader } from "services/loader";
+import { INotification } from "@notify/interfaces/INotification";
+import Notification from "@notify/notification";
 
 //.toSelf() sans interface
 const myContainer = new Container({ defaultScope: "Singleton" });
